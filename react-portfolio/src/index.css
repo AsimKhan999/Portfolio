@@ -572,10 +572,12 @@ header.scrolled {
   height: auto;
   display: block;
   transition: transform var(--transition-slow);
+  transform: scale(1.08);
+  transform-origin: top left;
 }
 
 .about-image:hover img {
-  transform: scale(1.05);
+  transform: scale(1.12);
 }
 
 .about-text {
