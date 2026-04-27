@@ -206,6 +206,7 @@ header.scrolled {
   width: 30px;
   height: 20px;
   position: relative;
+  overflow: hidden; /* Prevent spans from leaking out */
 }
 
 .hamburger span {
@@ -229,7 +230,7 @@ header.scrolled {
 
 .hamburger.open span:nth-child(2) {
   opacity: 0;
-  left: -60px;
+  left: 60px; /* Move right instead of left */
 }
 
 .hamburger.open span:nth-child(3) {
