@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/Logo2.png';
+import logoNew from '../assets/logo_new.png';
 
 function Home() {
   return (
@@ -20,7 +20,7 @@ function Home() {
         </div>
         
         <div className="hero-image">
-          <img src={logo} alt="Asim Khan logo" />
+          <img src={logoNew} alt="Asim Khan logo" className="hero-logo" />
         </div>
       </div>
     </div>

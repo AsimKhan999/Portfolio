@@ -388,6 +388,15 @@ header.scrolled {
   width: 100%;
   max-width: 400px;
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+  transition: filter 0.3s ease;
+}
+
+.hero-logo {
+  filter: none drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+}
+
+[data-theme='light'] .hero-logo {
+  filter: invert(1) drop-shadow(0 10px 20px rgba(0,0,0,0.1));
 }
 
 @keyframes float {

@@ -6,11 +6,13 @@ import Portfolio from './pages/Portfolio';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import ScrollToTop from './components/ScrollToTop';
+import AIChatbot from './components/AIChatbot';
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
+      <AIChatbot />
       <Header />
       <main>
         <Routes>
