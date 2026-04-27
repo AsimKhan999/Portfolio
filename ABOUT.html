@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./Assets/fa-5/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="name">
+            <h1>Asim Khan</h1>
+        </div>
+        
+        <div class="hamburger">
+            <i class="fa fa-bars"></i>
+        </div>
+        
+        <div class="nav-container">
+            <ul class="menu">
+                <li><a href="./HOME.html">HOME</a></li>
+                <li><a href="./PORTFOLIO.html">PORTFOLIO</a></li>
+                <li><a href="./ABOUT.html">ABOUT</a></li>
+                <li><a href="./CONTACT.html">CONTACT</a></li>
+            </ul>
+            
+            <div class="email">
+                <a href="mailto:iasimkhan2005@gmail.com"><i class="fa far fa-envelope"></i>iasimkhan2005@gmail.com</a>
+            </div>
+        </div>
+    </header>
+    <br>
+    <div class="no1">
+        <h1>About Me</h1>
+    </div>
+
+    <section class="about">
+        <div class="faq-item">
+            <p>
+                I am a Full-Stack Developer focused on building fast, accessible, and visually consistent web experiences. I combine clean code with clear design to deliver interfaces that are reliable, maintainable, and user‑friendly across devices.
+            </p>
+            <p>
+                My process is collaborative and transparent: discovery, design, development, and iteration. I value performance, semantics, and long‑term maintainability so your product scales with confidence.
+            </p>
+        </div>
+    </section>
+
+    <section class="info2">
+        <div class="ex">
+            <h1>Skills</h1>
+        </div>
+
+        <div class="services2">
+            <div class="card2">
+                <h2>Frontend</h2>
+                <h3>HTML5, CSS3, JavaScript (ES6+), Responsive Design, Accessibility (WCAG)</h3>
+            </div>
+
+            <div class="card2">
+                <h2>Frameworks & Tools</h2>
+                <h3>React, PHP, Tailwind/Bootstrap, Git/GitHub</h3>
+            </div>
+
+            <div class="card2">
+                <h2>Performance</h2>
+                <h3>Code splitting, asset optimization, best practices for fast, stable UIs</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="info2">
+        <div class="ex">
+            <h1>Education</h1>
+        </div>
+
+        <div class="services2">
+            <div class="card2">
+                <h2>Computer Science</h2>
+                <h3>Fundamentals of programming, data structures, web technologies, and UI/UX.</h3>
+            </div>
+
+            <div class="card2">
+                <h2>Professional Development</h2>
+                <h3>Continuous learning through documentation, courses, and real‑world projects.</h3>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            Developed By: <a href="mailto: asim@gmail.com"> Asim Khan </a>| &copy; Copyrights All Rights Reserved 2025
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navContainer = document.querySelector('.nav-container');
+            
+            hamburger.addEventListener('click', function() {
+                navContainer.classList.toggle('active');
+            });
+            
+            const menuLinks = document.querySelectorAll('.menu a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navContainer.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTFOLIO</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./Assets/fa-5/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="name">
+            <h1>Asim Khan</h1>
+        </div>
+        
+        <div class="hamburger">
+            <i class="fa fa-bars"></i>
+        </div>
+        
+        <div class="nav-container">
+            <ul class="menu">
+                <li><a href="./HOME.html">HOME</a></li>
+                <li><a href="./PORTFOLIO.html">PORTFOLIO</a></li>
+                <li><a href="./ABOUT.html">ABOUT</a></li>
+                <li><a href="./CONTACT.html">CONTACT</a></li>
+            </ul>
+            
+            <div class="email">
+                <a href="mailto:iasimkhan2005@gmail.com"><i class="fa far fa-envelope"></i>iasimkhan2005@gmail.com</a>
+            </div>
+        </div>
+    </header>
+    <br>
+    <div class="no1">
+        <h1>My Services</h1>
+    </div>
+
+    <section class="info1">
+        <div class="services">
+            <div class="card">
+                <i class="fa fab fa-chrome"></i>
+                <h2>Web Developement</h2>
+                <p>I build fast, accessible, and scalable websites with clean, modern code. From landing pages to full web apps, I focus on performance, semantics, and a smooth user experience.</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fa-cube"></i>
+                <h2>Web Design</h2>
+                <p>Human‑centered interfaces that balance clarity, brand, and conversion. I design pixel‑perfect layouts that feel intuitive on every device.</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fa-code"></i>
+                <h2>Uniqe layout</h2>
+                <p>Distinctive layouts that stand out without sacrificing usability. I craft grid‑smart compositions and thoughtful typography for a memorable first impression.</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fas fa-camera"></i>
+                <h2>Video Editing</h2>
+                <p>Story‑first edits with clean pacing, music sync, and tasteful motion. I handle cuts, color, and captions to deliver engaging videos ready to publish.</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fas fa-photo"></i>
+                <h2>Photography</h2>
+                <p>Crisp product and lifestyle photography with natural light and clean framing. Visuals that tell your brand story at a glance.</p>
+            </div>
+
+            <div class="card">
+                <i class="fa fas fa-paint-brush"></i>
+                <h2>Logo Design</h2>
+                <p>Memorable marks crafted with strategy, simplicity, and versatility. Your logo will scale beautifully from a favicon to a billboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="info2">
+        <div class="ex">
+            <h1>My Experience</h1>
+        </div>
+
+        <div class="services2">
+            <div class="card2">
+                <h2>Frontend Developer</h2>
+                <h3>I translate designs into performant, accessible interfaces using modern frameworks and standards. My focus is predictable UI, maintainable code, and measurable results.</h3>
+            </div>
+
+            <div class="card2">
+                <h2>UI & UX Designer</h2>
+                <h3>I craft user journeys that are clear and purposeful. From wireframes to high‑fidelity prototypes, I design experiences that align user needs with business goals.</h3>
+            </div>
+
+            <div class="card2">
+                <h2>Full Stack Developer</h2>
+                <h3>I deliver end‑to‑end solutions, from robust APIs to polished frontends. I prioritize reliability, security, and clean architecture for long‑term sustainability.</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="faqs">
+        <div class="ex">
+            <h1>Frequently Asked Questions</h1>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="faq-contact" hidden>
+            <label for="faq-contact" class="faq-header">How You Can Contact Me ? <span> &times; </span></label>
+            <div class="faq-data">
+                Email is the quickest way: <a href="mailto:iasimkhan2005@gmail.com">iasimkhan2005@gmail.com</a>. You can also reach out via the contact form or connect on LinkedIn for project inquiries and collaborations.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="faq-time" hidden>
+            <label for="faq-time" class="faq-header">How much time it takes to built a website? <span> &times; </span></label>
+            <div class="faq-data">
+                Timelines vary by scope. A simple landing page may take 3–5 days, while a custom multi‑page site or web app can take 2–6 weeks. I provide a detailed schedule after a brief requirements call.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="faq-guarantee" hidden>
+            <label for="faq-guarantee" class="faq-header">Do you offer any kind of gurantee on your service ? <span> &times; </span></label>
+            <div class="faq-data">
+                Yes. Every project includes milestone reviews, cross‑browser testing, and a 14‑day post‑launch support window for refinements and bug fixes aligned with the agreed scope.
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            Developed By: <a href="mailto: asim@gmail.com"> Asim Khan </a>| &copy; Copyrights All Rights Reserved 2025
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navContainer = document.querySelector('.nav-container');
+            
+            hamburger.addEventListener('click', function() {
+                navContainer.classList.toggle('active');
+            });
+            
+            const menuLinks = document.querySelectorAll('.menu a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navContainer.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
