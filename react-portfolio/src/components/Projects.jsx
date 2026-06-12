@@ -1,4 +1,4 @@
-import StellarImg from '../../../Assets/Stellar image.jpeg';
+import StellarImg from '../assets/mypic.jpeg';
 
 function Projects() {
   const projects = [
