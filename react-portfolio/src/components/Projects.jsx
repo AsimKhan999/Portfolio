@@ -1,3 +1,5 @@
+import StellarImg from '../../../Assets/Stellar image.jpeg';
+
 function Projects() {
   const projects = [
     {
@@ -13,10 +15,10 @@ function Projects() {
       id: 2,
       title: 'Admin Dashboard',
       description: 'A comprehensive analytics dashboard with real-time data visualization, user management, and detailed reporting features.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      tags: ['React', 'PHP', 'MySQL', 'Chart.js'],
-      demoUrl: '#',
-      repoUrl: 'https://github.com/AsimKhan999'
+      image: StellarImg,
+      tags: ['React', 'Chart.js'],
+      demoUrl: 'https://admin-dashboard-three-snowy-80.vercel.app/login',
+      repoUrl: 'https://github.com/AsimKhan999/Admin-Dashboard'
     },
     {
       id: 3,
@@ -40,11 +42,19 @@ function Projects() {
           {projects.map((project, i) => (
             <div className={`glass-card project-card stagger-${(i % 8) + 1}`} key={project.id} style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
               
-              <div className="project-img-wrapper" style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
+              <div className="project-img-wrapper" style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <img 
                   src={project.image} 
                   alt={project.title} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: project.id === 2 ? 'center 28%' : 'center center',
+                    transformOrigin: 'center center',
+                    transition: 'transform 0.4s ease'
+                  }}
                   onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'}
                   onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
                 />
