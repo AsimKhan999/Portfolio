@@ -1,5 +1,21 @@
 import { createClient } from '@supabase/supabase-js';
 
+const LOCKOUT_THRESHOLD = 5;
+const BASE_LOCKOUT_SECONDS = 30;
+const MAX_LOCKOUT_SECONDS = 3600;
+
+function getClientIp(req) {
+  const fwd = req.headers['x-forwarded-for'];
+  if (fwd) return String(fwd).split(',')[0].trim();
+  return (req.socket && req.socket.remoteAddress) || 'unknown';
+}
+
+function lockoutSecondsFor(failCount) {
+  if (failCount < LOCKOUT_THRESHOLD) return 0;
+  const exponent = failCount - LOCKOUT_THRESHOLD;
+  return Math.min(BASE_LOCKOUT_SECONDS * 2 ** exponent, MAX_LOCKOUT_SECONDS);
+}
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
 
@@ -24,18 +40,72 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server is not configured.' });
   }
 
+  const adminClient = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
+  const ip = getClientIp(req);
+  const now = new Date();
+
+  let attempts;
+  try {
+    const { data } = await adminClient
+      .from('login_attempts')
+      .select('*')
+      .eq('ip', ip)
+      .maybeSingle();
+    attempts = data;
+  } catch (err) {
+    console.error('login_attempts read failed:', err.message || err);
+    return res.status(503).json({ error: 'Lockout service unavailable. Contact the site owner.' });
+  }
+
+  if (attempts && attempts.lockout_until && new Date(attempts.lockout_until).getTime() > now.getTime()) {
+    const retryAfter = Math.max(1, Math.ceil((new Date(attempts.lockout_until).getTime() - now.getTime()) / 1000));
+    return res.status(429).json({
+      error: `Too many failed attempts. Try again in ${retryAfter}s.`,
+      retry_after: retryAfter,
+    });
+  }
+
   const userOk = username === expectedUser;
   const passOk = password === expectedPass;
 
   if (!userOk || !passOk) {
-    console.error(`[login] mismatch -> expectedUserLen=${(expectedUser || '').length} expectedPassLen=${(expectedPass || '').length} userOk=${userOk} passOk=${passOk} receivedUserLen=${(username || '').length}`);
-    return res.status(401).json({ error: 'Invalid username or password.' });
+    const failCount = (attempts?.fail_count || 0) + 1;
+    const lockSeconds = lockoutSecondsFor(failCount);
+    const lockoutUntil = lockSeconds > 0
+      ? new Date(now.getTime() + lockSeconds * 1000).toISOString()
+      : null;
+
+    try {
+      await adminClient.from('login_attempts').upsert(
+        { ip, fail_count: failCount, lockout_until: lockoutUntil, updated_at: now.toISOString() },
+        { onConflict: 'ip' }
+      );
+    } catch (err) {
+      console.error('login_attempts write failed:', err.message || err);
+      return res.status(503).json({ error: 'Lockout service unavailable. Contact the site owner.' });
+    }
+
+    if (lockSeconds > 0) {
+      return res.status(429).json({
+        error: `Too many failed attempts. Try again in ${lockSeconds}s.`,
+        retry_after: lockSeconds,
+      });
+    }
+
+    return res.status(401).json({
+      error: 'Invalid username or password.',
+      remaining: LOCKOUT_THRESHOLD - failCount,
+    });
   }
 
   try {
-    const auth = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
+    await adminClient.from('login_attempts').delete().eq('ip', ip);
+  } catch (err) {
+    console.error('login_attempts reset failed:', err.message || err);
+  }
 
-    const { data, error } = await auth.auth.signInWithPassword({
+  try {
+    const { data, error } = await adminClient.auth.signInWithPassword({
       email: adminEmail,
       password: expectedPass,
     });

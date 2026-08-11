@@ -243,6 +243,12 @@
   border-color: rgba(16, 185, 129, 0.3);
 }
 
+.admin-alert-warn {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
 .admin-toast {
   position: fixed;
   bottom: 1.5rem;

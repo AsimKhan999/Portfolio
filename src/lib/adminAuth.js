@@ -13,7 +13,13 @@ export async function loginAdmin(username, password) {
 
   if (!res.ok) {
     const hint = parsed?.error || (raw ? raw.slice(0, 200) : '(empty response)');
-    throw new Error(`Login failed (HTTP ${res.status}): ${hint}`);
+    const err = new Error(`Login failed (HTTP ${res.status}): ${hint}`);
+    err.status = res.status;
+    if (parsed) {
+      err.retryAfter = parsed.retry_after;
+      err.remaining = parsed.remaining;
+    }
+    throw err;
   }
 
   if (!parsed?.access_token) {

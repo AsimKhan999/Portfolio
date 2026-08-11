@@ -102,6 +102,14 @@ create table if not exists public.messages (
   created_at timestamptz default now()
 );
 
+-- 9. login_attempts - brute-force lockout tracker (used by the API with the service role key)
+create table if not exists public.login_attempts (
+  ip text primary key,
+  fail_count int not null default 0,
+  lockout_until timestamptz,
+  updated_at timestamptz default now()
+);
+
 -- ---------- SEED DATA (matches the current hardcoded content) ----------
 
 insert into public.site_settings (about_paragraphs, hero_intro)
@@ -184,6 +192,7 @@ alter table public.faqs            enable row level security;
 alter table public.tech_stack      enable row level security;
 alter table public.education       enable row level security;
 alter table public.messages        enable row level security;
+alter table public.login_attempts  enable row level security;
 
 do $$
 declare t text;
