@@ -610,6 +610,14 @@
   gap: 0.4rem;
 }
 
+.admin-login-card .admin-form-group {
+  margin-bottom: 1rem;
+}
+
+.admin-login-card .admin-form-group:last-of-type {
+  margin-bottom: 0;
+}
+
 .admin-label {
   font-size: 0.85rem;
   font-weight: 600;
