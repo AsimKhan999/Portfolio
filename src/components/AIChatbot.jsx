@@ -101,7 +101,7 @@ function AIChatbot() {
                 padding: '10px 15px',
                 borderRadius: '15px',
                 fontSize: '0.9rem',
-                background: msg.role === 'user' ? 'var(--accent-primary)' : 'rgba(255,255,255,0.05)',
+                background: msg.role === 'user' ? 'var(--accent-primary)' : 'var(--chat-bubble-bg)',
                 color: msg.role === 'user' ? 'white' : 'var(--text-primary)',
                 border: msg.role === 'user' ? 'none' : '1px solid var(--glass-border)'
               }}>
@@ -122,7 +122,7 @@ function AIChatbot() {
               onChange={(e) => setInput(e.target.value)}
               style={{ 
                 flex: 1, 
-                background: 'transparent', 
+                background: 'var(--chat-bubble-bg)', 
                 border: '1px solid var(--glass-border)', 
                 borderRadius: '20px', 
                 padding: '8px 15px',

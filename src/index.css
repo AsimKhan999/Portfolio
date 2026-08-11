@@ -10,6 +10,9 @@
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-hover: rgba(255, 255, 255, 0.06);
+
+  --chat-bg: rgba(13, 13, 20, 0.92);
+  --chat-bubble-bg: rgba(255, 255, 255, 0.08);
   
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -27,6 +30,9 @@
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.1);
   --glass-hover: rgba(255, 255, 255, 0.9);
+
+  --chat-bg: rgba(255, 255, 255, 0.96);
+  --chat-bubble-bg: rgba(15, 23, 42, 0.06);
 }
 
 * {
@@ -37,6 +43,35 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 8px;
+  border: 2px solid var(--bg-color);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-secondary), var(--accent-primary));
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 body {
@@ -107,6 +142,21 @@ body::before {
   border-color: rgba(220, 38, 38, 0.3);
   transform: translateY(-4px);
   box-shadow: 0 10px 30px -10px rgba(220, 38, 38, 0.15);
+}
+
+/* AI chatbot panel - solid, readable surface */
+.chat-window {
+  background: var(--chat-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.chat-window.glass-card:hover {
+  background: var(--chat-bg);
+  border-color: var(--glass-border);
+  transform: none;
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .section-title {
