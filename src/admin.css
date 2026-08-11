@@ -757,6 +757,9 @@ textarea.admin-input {
 @media screen and (max-width: 768px) {
   .admin-sidebar {
     transform: translateX(-100%);
+    background: var(--bg-color);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .admin-sidebar.open {
