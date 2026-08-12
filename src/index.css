@@ -41,8 +41,14 @@
   box-sizing: border-box;
 }
 
+img,
+video {
+  max-width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Custom scrollbar */
@@ -79,6 +85,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  overflow-wrap: break-word;
   position: relative;
   line-height: 1.6;
   transition: var(--theme-transition);
@@ -145,6 +152,13 @@ body::before {
 }
 
 /* AI chatbot panel - solid, readable surface */
+.ai-chatbot-container {
+  position: fixed !important;
+  bottom: 30px;
+  right: 30px;
+  z-index: 2000;
+}
+
 .chat-window {
   background: var(--chat-bg);
   backdrop-filter: blur(20px);
@@ -269,6 +283,7 @@ header.scrolled {
   width: 30px;
   height: 20px;
   position: relative;
+  margin-left: -2px;
   overflow: hidden; /* Prevent spans from leaking out */
 }
 
@@ -469,6 +484,13 @@ header.scrolled {
 }
 
 .services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
@@ -939,6 +961,14 @@ footer {
 @media screen and (max-width: 768px) {
   .hamburger { display: block; }
 
+  header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .page-container {
+    padding: 90px 1.25rem 50px;
+  }
+
   .menu-open .theme-toggle { display: none; }
   .nav-container {
     position: fixed;
@@ -972,6 +1002,12 @@ footer {
   .timeline::before { left: 15px; }
   .timeline-item { padding-left: 45px; }
   .timeline-dot { left: 7px; width: 16px; height: 16px; }
+
+  .projects-grid,
+  .services-grid,
+  .tech-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -979,6 +1015,17 @@ footer {
   .section-title h1 { font-size: 2rem; }
   .service-card { padding: 1.5rem; }
   .contact-form { padding: 1.5rem; }
+
+  .projects-grid,
+  .services-grid,
+  .tech-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .chat-window {
+    width: min(350px, calc(100vw - 40px)) !important;
+  }
 }
 
 /* --- 404 page --- */

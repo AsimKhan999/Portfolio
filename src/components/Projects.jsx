@@ -12,7 +12,7 @@ function Projects() {
           <h1>My Projects</h1>
         </div>
         <section>
-          <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
+          <div className="projects-grid">
             {[1, 2, 3].map(i => (
               <div className="glass-card" key={i} style={{ overflow: 'hidden' }}>
                 <div className="skeleton" style={{ width: '100%', aspectRatio: '16/9' }}></div>
@@ -36,7 +36,7 @@ function Projects() {
       </div>
 
       <section>
-        <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
+        <div className="projects-grid">
           {projects.map((project, i) => (
             <div className={`glass-card project-card stagger-${(i % 8) + 1}`} key={project.id} style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
@@ -77,9 +77,11 @@ function Projects() {
                 </div>
 
                 <div className="project-links" style={{ display: 'flex', gap: '1rem', marginTop: 'auto' }}>
-                  <a href={project.demo_url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: '0.85rem', flex: 1, textAlign: 'center' }}>
-                    <i className="fas fa-external-link-alt" style={{ marginRight: '6px' }}></i> Live Demo
-                  </a>
+                  {project.demo_url && project.demo_url !== '#' && (
+                    <a href={project.demo_url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: '0.85rem', flex: 1, textAlign: 'center' }}>
+                      <i className="fas fa-external-link-alt" style={{ marginRight: '6px' }}></i> Live Demo
+                    </a>
+                  )}
                   <a href={project.repo_url} target="_blank" rel="noopener noreferrer" className="btn" style={{ padding: '8px 16px', fontSize: '0.85rem', flex: 1, textAlign: 'center' }}>
                     <i className="fab fa-github" style={{ marginRight: '6px' }}></i> Code
                   </a>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,7 @@ function AIChatbot() {
     }
   };
 
-  return (
+  return createPortal(
     <div className="ai-chatbot-container" style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 2000 }}>
       {/* Chat Button */}
       <button 
@@ -70,7 +71,7 @@ function AIChatbot() {
           borderRadius: '50%', 
           padding: '0', 
           fontSize: '1.5rem',
-          boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4)'
+          boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4)',
         }}
       >
         <i className={isOpen ? 'fas fa-times' : 'fas fa-robot'}></i>
@@ -143,7 +144,8 @@ function AIChatbot() {
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </div>
+    </div>,
+    document.body
   );
 }
 
