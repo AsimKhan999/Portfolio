@@ -493,6 +493,14 @@
   color: var(--accent-primary);
 }
 
+.admin-row-hidden {
+  opacity: 0.55;
+}
+
+.admin-row-hidden:hover {
+  opacity: 0.8;
+}
+
 .admin-empty {
   text-align: center;
   padding: 3rem 1rem;

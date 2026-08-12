@@ -34,6 +34,7 @@ create table if not exists public.projects (
   demo_url text default '#',
   repo_url text default '',
   sort_order int default 0,
+  is_visible boolean not null default true,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -45,6 +46,7 @@ create table if not exists public.services (
   title text not null,
   description text not null default '',
   sort_order int default 0,
+  is_visible boolean not null default true,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -55,6 +57,7 @@ create table if not exists public.experience (
   title text not null,
   description text not null default '',
   sort_order int default 0,
+  is_visible boolean not null default true,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -65,6 +68,7 @@ create table if not exists public.faqs (
   question text not null,
   answer text not null default '',
   sort_order int default 0,
+  is_visible boolean not null default true,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -77,6 +81,7 @@ create table if not exists public.tech_stack (
   description text not null default '',
   tags jsonb default '[]'::jsonb,
   sort_order int default 0,
+  is_visible boolean not null default true,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -87,6 +92,7 @@ create table if not exists public.education (
   title text not null,
   description text not null default '',
   sort_order int default 0,
+  is_visible boolean not null default true,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );

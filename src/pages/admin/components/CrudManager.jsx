@@ -103,6 +103,16 @@ function CrudManager({ table, fields, title, icon, renderSummary }) {
     }
   };
 
+  const handleToggleVisible = async (item) => {
+    try {
+      const visible = item.is_visible !== false;
+      await crud.update(item.id, { is_visible: !visible });
+      setToast(visible ? 'Item hidden from the public site.' : 'Item is now visible on the public site.');
+    } catch (err) {
+      setFormError(err.message || 'Visibility change failed.');
+    }
+  };
+
   return (
     <div>
       <div className="admin-section-head">
@@ -127,7 +137,7 @@ function CrudManager({ table, fields, title, icon, renderSummary }) {
 
       <div className="admin-list">
         {items.map((item, i) => (
-          <div className="glass-card admin-row" key={item.id}>
+          <div className={`glass-card admin-row${item.is_visible === false ? ' admin-row-hidden' : ''}`} key={item.id}>
             <div className="admin-row-main">
               {renderSummary ? renderSummary(item) : (
                 <div className="admin-row-title">{item.title || `Item ${i + 1}`}</div>
@@ -139,6 +149,13 @@ function CrudManager({ table, fields, title, icon, renderSummary }) {
               </button>
               <button className="admin-icon-btn" onClick={() => crud.move(item.id, 1)} disabled={i === items.length - 1} title="Move down">
                 <i className="fas fa-chevron-down"></i>
+              </button>
+              <button
+                className={`admin-icon-btn${item.is_visible === false ? ' admin-icon-accent' : ''}`}
+                onClick={() => handleToggleVisible(item)}
+                title={item.is_visible === false ? 'Show on public site' : 'Hide from public site'}
+              >
+                <i className={item.is_visible === false ? 'fas fa-eye-slash' : 'fas fa-eye'}></i>
               </button>
               <button className="admin-icon-btn" onClick={() => openEdit(item)} title="Edit">
                 <i className="fas fa-edit"></i>

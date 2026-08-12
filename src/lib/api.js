@@ -4,6 +4,7 @@ const orderBy = (col = 'sort_order') => ({ column: col, ascending: true });
 
 export const fetchAll = async (table, opts = {}) => {
   let q = supabase.from(table).select('*');
+  if (opts.visibleOnly) q = q.eq('is_visible', true);
   if (opts.order) q = q.order(opts.order.column, { ascending: opts.order.ascending ?? true });
   if (opts.eq) q = q.eq(opts.eq.column, opts.eq.value);
   const { data, error } = await q;
@@ -36,12 +37,12 @@ export const deleteRow = async (table, id) => {
 
 // ---- Section helpers (public site) ----
 
-export const getProjects = () => fetchAll('projects', { order: orderBy() });
-export const getServices = () => fetchAll('services', { order: orderBy() });
-export const getExperience = () => fetchAll('experience', { order: orderBy() });
-export const getFaqs = () => fetchAll('faqs', { order: orderBy() });
-export const getTechStack = () => fetchAll('tech_stack', { order: orderBy() });
-export const getEducation = () => fetchAll('education', { order: orderBy() });
+export const getProjects = () => fetchAll('projects', { order: orderBy(), visibleOnly: true });
+export const getServices = () => fetchAll('services', { order: orderBy(), visibleOnly: true });
+export const getExperience = () => fetchAll('experience', { order: orderBy(), visibleOnly: true });
+export const getFaqs = () => fetchAll('faqs', { order: orderBy(), visibleOnly: true });
+export const getTechStack = () => fetchAll('tech_stack', { order: orderBy(), visibleOnly: true });
+export const getEducation = () => fetchAll('education', { order: orderBy(), visibleOnly: true });
 
 export const getSiteSettings = async () => {
   const { data, error } = await supabase.from('site_settings').select('*').order('id').limit(1).maybeSingle();
