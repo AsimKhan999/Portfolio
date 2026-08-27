@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useCrud } from '../hooks/useCrud';
+import { useSiteData } from '../../../context/SiteDataContext';
 import Modal from './Modal';
 import ImagePicker from './ImagePicker';
 import TagInput from './TagInput';
@@ -33,6 +34,7 @@ function Field({ field, value, onChange }) {
 
 function CrudManager({ table, fields, title, icon, renderSummary }) {
   const crud = useCrud(table);
+  const { refresh } = useSiteData();
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({});
@@ -82,6 +84,7 @@ function CrudManager({ table, fields, title, icon, renderSummary }) {
         setToast('Item added.');
       }
       setModalOpen(false);
+      refresh();
     } catch (err) {
       setFormError(err.message || 'Something went wrong.');
     } finally {
@@ -95,6 +98,7 @@ function CrudManager({ table, fields, title, icon, renderSummary }) {
       await crud.remove(deleting.id);
       setToast('Item deleted.');
       setDeleting(null);
+      refresh();
     } catch (err) {
       setFormError(err.message || 'Delete failed.');
       setDeleting(null);
@@ -108,6 +112,7 @@ function CrudManager({ table, fields, title, icon, renderSummary }) {
       const visible = item.is_visible !== false;
       await crud.update(item.id, { is_visible: !visible });
       setToast(visible ? 'Item hidden from the public site.' : 'Item is now visible on the public site.');
+      refresh();
     } catch (err) {
       setFormError(err.message || 'Visibility change failed.');
     }

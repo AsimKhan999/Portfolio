@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { uploadImage } from '../../../lib/api';
 import { getPublicImageUrl } from '../../../lib/supabaseClient';
 
-function ImagePicker({ value, onChange, label = 'Image', bucketHint = 'JPG / PNG / WEBP, up to ~2MB' }) {
+function ImagePicker({ value, onChange, label = 'Image', bucketHint = 'JPG / PNG / WEBP, up to ~2MB', showUrl = true, hoverActions = false }) {
   const fileRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -35,6 +35,27 @@ function ImagePicker({ value, onChange, label = 'Image', bucketHint = 'JPG / PNG
         ) : (
           <div className="admin-image-empty"><i className="fas fa-image"></i></div>
         )}
+        {hoverActions && preview && (
+          <div className="admin-image-preview-actions">
+            <button
+              type="button"
+              className="admin-icon-btn"
+              title="Edit image"
+              onClick={() => fileRef.current?.click()}
+              disabled={uploading}
+            >
+              {uploading ? <i className="fas fa-spinner fa-spin"></i> : <i className="fas fa-edit"></i>}
+            </button>
+            <button
+              type="button"
+              className="admin-icon-btn admin-icon-danger"
+              title="Remove image"
+              onClick={() => onChange('')}
+            >
+              <i className="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="admin-image-actions">
@@ -45,13 +66,15 @@ function ImagePicker({ value, onChange, label = 'Image', bucketHint = 'JPG / PNG
         <span className="admin-hint">{bucketHint}</span>
       </div>
 
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="...or paste an image URL"
-        className="admin-input"
-      />
+      {showUrl && (
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="...or paste an image URL"
+          className="admin-input"
+        />
+      )}
 
       {error && <div className="admin-alert admin-alert-error">{error}</div>}
     </div>

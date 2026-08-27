@@ -1,5 +1,6 @@
 import { useSiteData } from '../context/SiteDataContext';
 import { getTechIcon } from '../lib/techIcons';
+import { getPublicImageUrl } from '../lib/supabaseClient';
 import mypic from '../assets/mypic.jpeg';
 
 function About() {
@@ -8,6 +9,8 @@ function About() {
   const techStack = data?.techStack || [];
   const education = data?.education || [];
   const paragraphs = data?.settings?.about_paragraphs || [];
+  const settings = data?.settings;
+  const profileImg = settings?.profile_image ? getPublicImageUrl(settings.profile_image) : mypic;
 
   if (loading) {
     return (
@@ -35,7 +38,13 @@ function About() {
 
       <section className="about-hero">
         <div className="about-image stagger-1">
-          <img src={mypic} alt={`${data?.settings?.name || 'Asim Khan'}`} />
+          {settings?.profile_image_link ? (
+            <a href={settings.profile_image_link} target="_blank" rel="noopener noreferrer">
+              <img src={profileImg} alt={`${data?.settings?.name || 'Asim Khan'}`} />
+            </a>
+          ) : (
+            <img src={profileImg} alt={`${data?.settings?.name || 'Asim Khan'}`} />
+          )}
         </div>
         <div className="about-text stagger-2">
           {paragraphs.map((p, i) => (

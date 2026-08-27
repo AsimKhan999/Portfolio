@@ -25,7 +25,9 @@ export const insertRow = async (table, payload) => {
 };
 
 export const updateRow = async (table, id, payload) => {
-  const { data, error } = await supabase.from(table).update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single();
+  const { id: _id, created_at, updated_at, ...rest } = { ...payload };
+  void _id; void created_at; void updated_at;
+  const { data, error } = await supabase.from(table).update({ ...rest, updated_at: new Date().toISOString() }).eq('id', id).select().single();
   if (error) throw error;
   return data;
 };

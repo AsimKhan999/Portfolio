@@ -13,6 +13,8 @@ create table if not exists public.site_settings (
   email text default 'iasimkhan2005@gmail.com',
   location text default 'Available for Remote Work',
   hero_intro text default 'I specialize in technologies like HTML, CSS, JavaScript, PHP, MySQL, and the MERN Stack (MongoDB, Express, React, Node.js). My passion lies in building responsive, accessible, and visually appealing websites that provide a seamless user experience.',
+  profile_image text default '',
+  profile_image_link text default '',
   about_paragraphs jsonb default '[]'::jsonb,
   socials jsonb default '[{"label":"GitHub","url":"https://github.com/AsimKhan999","icon":"fab fa-github"},{"label":"LinkedIn","url":"https://www.linkedin.com/in/asim-khan-3258bb3a2/","icon":"fab fa-linkedin-in"},{"label":"Email","url":"mailto:iasimkhan2005@gmail.com","icon":"fas fa-envelope"}]'::jsonb,
   web3forms_key text default '5895fe30-291e-4a86-8796-ab1285827554',

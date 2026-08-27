@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { fetchOne, updateRow } from '../../../lib/api';
 import { AdminFormSkeleton } from '../components/LoadingSkeleton';
+import ImagePicker from '../components/ImagePicker';
+import { useSiteData } from '../../../context/SiteDataContext';
 
 const emptySettings = {
   name: '',
@@ -9,6 +11,7 @@ const emptySettings = {
   email: '',
   location: '',
   hero_intro: '',
+  profile_image: '',
   about_paragraphs: [],
   socials: [],
   web3forms_key: '',
@@ -16,6 +19,7 @@ const emptySettings = {
 };
 
 function SettingsSection() {
+  const { refresh } = useSiteData();
   const [form, setForm] = useState(emptySettings);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -56,6 +60,8 @@ function SettingsSection() {
     try {
       await updateRow('site_settings', 1, form);
       setStatus({ type: 'success', message: 'Settings saved. Your site is updated.' });
+      refresh();
+      setTimeout(() => setStatus({ type: '', message: '' }), 3000);
     } catch (err) {
       setStatus({ type: 'error', message: err.message });
     } finally {
@@ -105,6 +111,15 @@ function SettingsSection() {
       <div className="glass-card admin-settings-card">
         <h3>Profile</h3>
         <div className="admin-form admin-form-grid">
+          <div style={{ gridColumn: '1 / -1' }}>
+            <ImagePicker
+              label="Profile Picture (About page)"
+              value={form.profile_image || ''}
+              onChange={(v) => set('profile_image', v)}
+              showUrl
+              hoverActions
+            />
+          </div>
           {text('Your Name', 'name')}
           {text('Role / Title', 'role')}
           {text('Tagline', 'tagline')}
@@ -143,12 +158,6 @@ function SettingsSection() {
         <h3>Contact Form</h3>
         {text('Web3Forms Access Key', 'web3forms_key')}
         <p className="admin-hint">This key powers the contact form email delivery. Get yours at web3forms.com</p>
-      </div>
-
-      <div style={{ textAlign: 'right', marginTop: '1rem' }}>
-        <button className="btn" onClick={handleSave} disabled={saving}>
-          {saving ? <i className="fas fa-spinner fa-spin"></i> : <i className="fas fa-save"></i>} Save Changes
-        </button>
       </div>
     </div>
   );
