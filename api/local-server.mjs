@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import loginHandler from './login.js';
 import contactHandler from './contact.js';
+import chatHandler from './chat.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const envPath = resolve(here, '../.env');
@@ -43,6 +44,7 @@ const server = http.createServer((req, res) => {
     try {
       if (pathname === '/api/login') return await loginHandler(r, w);
       if (pathname === '/api/contact') return await contactHandler(r, w);
+      if (pathname === '/api/chat') return await chatHandler(r, w);
       return jsonResponse(w, 404, { error: `Not found: ${pathname}` });
     } catch (err) {
       console.error('Local API error:', err);
@@ -54,6 +56,7 @@ const server = http.createServer((req, res) => {
 const PORT = process.env.PORT || 8787;
 server.listen(PORT, () => {
   console.log(`Local API server running on http://localhost:${PORT}`);
-  console.log('Routes: POST /api/login, POST /api/contact');
+  console.log('Routes: POST /api/login, POST /api/contact, POST /api/chat');
+  console.log(`Env check -> GROQ_API_KEY: ${process.env.GROQ_API_KEY ? `set (${process.env.GROQ_API_KEY.length} chars)` : 'MISSING'}`);
   console.log(`Env check -> ADMIN_USERNAME: ${process.env.ADMIN_USERNAME ? 'set (' + process.env.ADMIN_USERNAME.length + ' chars)' : 'MISSING'}, ADMIN_PASSWORD: ${process.env.ADMIN_PASSWORD ? 'set (' + process.env.ADMIN_PASSWORD.length + ' chars)' : 'MISSING'}, SERVICE_ROLE_KEY: ${process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.length + ' chars' : 'MISSING'}, ADMIN_EMAIL: ${process.env.SUPABASE_ADMIN_EMAIL ? 'set' : 'MISSING'}`);
 });

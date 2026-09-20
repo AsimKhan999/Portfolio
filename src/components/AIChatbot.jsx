@@ -28,14 +28,10 @@ function AIChatbot() {
     setIsTyping(true);
 
     try {
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
           messages: [
             {
               role: "system",
@@ -43,14 +39,13 @@ function AIChatbot() {
             },
             ...messages,
             userMessage
-          ],
-          temperature: 0.7,
-          max_tokens: 500
+          ]
         })
       });
 
       const data = await response.json();
-      const assistantMessage = { role: 'assistant', content: data.choices[0].message.content };
+      if (!response.ok) throw new Error(data.error || 'Chat request failed');
+      const assistantMessage = { role: 'assistant', content: data.content };
       setMessages(prev => [...prev, assistantMessage]);
     } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting right now. Please try again later!" }]);
