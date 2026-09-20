@@ -60,7 +60,7 @@ function AIChatbot() {
   };
 
   return createPortal(
-    <div className="ai-chatbot-container" style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 2000 }}>
+    <div className="ai-chatbot-container" style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 2000, display: 'none' }}>
       {/* Chat Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
