@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
+import { getPublicImageUrl } from '../lib/supabaseClient';
 import logoNew from '../assets/logo_new.png';
 
 function Home() {
@@ -59,6 +60,16 @@ function Home() {
           <div className="hero-btns">
             <Link to="/portfolio" className="btn">View Portfolio</Link>
             <Link to="/contact" className="btn btn-ghost">Contact Me</Link>
+            {settings.cv_url && (
+              <a
+                className="btn btn-ghost"
+                href={getPublicImageUrl(settings.cv_url)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="fas fa-download"></i> Download CV
+              </a>
+            )}
           </div>
         </div>
 

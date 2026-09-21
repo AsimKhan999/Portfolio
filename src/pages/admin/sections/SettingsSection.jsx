@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { fetchOne, updateRow } from '../../../lib/api';
+import { useState, useEffect, useRef } from 'react';
+import { fetchOne, updateRow, uploadImage } from '../../../lib/api';
 import { AdminFormSkeleton } from '../components/LoadingSkeleton';
 import ImagePicker from '../components/ImagePicker';
+import { getPublicImageUrl } from '../../../lib/supabaseClient';
 import { useSiteData } from '../../../context/SiteDataContext';
 
 const emptySettings = {
@@ -12,6 +13,7 @@ const emptySettings = {
   location: '',
   hero_intro: '',
   profile_image: '',
+  cv_url: '',
   about_paragraphs: [],
   socials: [],
   web3forms_key: '',
@@ -24,6 +26,8 @@ function SettingsSection() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState({ type: '', message: '' });
+  const [uploadingCv, setUploadingCv] = useState(false);
+  const cvInputRef = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -69,6 +73,21 @@ function SettingsSection() {
     }
   };
 
+  const handleCvUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingCv(true);
+    try {
+      const path = await uploadImage(file, 'cv');
+      set('cv_url', path);
+    } catch (err) {
+      setStatus({ type: 'error', message: err.message });
+    } finally {
+      setUploadingCv(false);
+      e.target.value = '';
+    }
+  };
+
   const text = (label, key, opts = {}) => (
     <div className="admin-form-group">
       <label className="admin-label">{label}</label>
@@ -108,7 +127,7 @@ function SettingsSection() {
         </div>
       )}
 
-      <div className="glass-card admin-settings-card">
+<div className="glass-card admin-settings-card">
         <h3>Profile</h3>
         <div className="admin-form admin-form-grid">
           <div style={{ gridColumn: '1 / -1' }}>
@@ -127,6 +146,27 @@ function SettingsSection() {
           {text('Location / Availability', 'location')}
           {text('Copyright text', 'copyright')}
           {text('Hero intro (home page)', 'hero_intro', { textarea: true, rows: 4 })}
+        </div>
+      </div>
+
+      <div className="glass-card admin-settings-card">
+        <h3>CV / Resume</h3>
+        <p className="admin-hint">Upload your CV (PDF). A "Download CV" button will appear on the About page.</p>
+        <div className="admin-image-actions">
+          <input ref={cvInputRef} type="file" accept=".pdf,application/pdf" style={{ display: 'none' }} onChange={handleCvUpload} />
+          <button type="button" className="btn btn-ghost" onClick={() => cvInputRef.current?.click()} disabled={uploadingCv}>
+            {uploadingCv ? <i className="fas fa-spinner fa-spin"></i> : <i className="fas fa-upload"></i>} Upload CV
+          </button>
+          {form.cv_url && (
+            <>
+              <a className="btn btn-ghost" href={getPublicImageUrl(form.cv_url)} target="_blank" rel="noopener noreferrer">
+                <i className="fas fa-file-pdf"></i> View uploaded CV
+              </a>
+              <button type="button" className="btn btn-ghost" onClick={() => set('cv_url', '')}>
+                <i className="fas fa-trash-alt"></i> Remove
+              </button>
+            </>
+          )}
         </div>
       </div>
 

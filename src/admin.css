@@ -760,19 +760,14 @@ textarea.admin-input {
 }
 
 /* Remove hover lift on the Site Settings page cards (Profile, About,
-   Social Links, Contact Form) and their buttons. */
+   Social Links, Contact Form) only. Buttons keep their normal hover
+   animation like the "View site" button. */
 .admin-settings-card.glass-card:hover,
 .admin-settings-card.glass-card:focus-within {
   background: var(--glass-bg);
   border-color: var(--glass-border);
   transform: none;
   box-shadow: none;
-}
-.admin-settings-card .btn:hover,
-.admin-settings-card .btn:hover::before {
-  transform: none;
-  box-shadow: none;
-  opacity: 0;
 }
 
 .admin-social-row {

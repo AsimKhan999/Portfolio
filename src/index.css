@@ -671,6 +671,10 @@ header.scrolled {
   font-size: 1.1rem;
 }
 
+.about-cv-btn {
+  margin-top: 0.75rem;
+}
+
 /* Tech Grid */
 .tech-grid {
   display: grid;

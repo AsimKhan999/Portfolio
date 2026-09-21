@@ -50,6 +50,16 @@ function About() {
           {paragraphs.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+          {settings?.cv_url && (
+            <a
+              className="btn about-cv-btn"
+              href={getPublicImageUrl(settings.cv_url)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fas fa-download"></i> Download CV
+            </a>
+          )}
         </div>
       </section>
 
